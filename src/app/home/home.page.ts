@@ -14,7 +14,7 @@ export class HomePage {
 
   ionViewDidEnter() {
     // Inisialisasi peta di elemen dengan ID "mapId"
-    this.map = L.map('mapId').setView([51.505, -0.09], 10);
+    this.map = L.map('mapId').setView([51.505, -0.09], 13);
     
     // Tambahkan layer peta
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -34,11 +34,26 @@ export class HomePage {
       attribution: '&copy; <a href="https://carto.com/attribution">CARTO</a>'
     });
 
+    const esriWorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    const esriWorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    const googleSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      attribution: '&copy; <a href="https://www.google.com/intl/en_US/help/terms_maps/">Google</a>'
+    });
+
     // Tambahkan layer control untuk menampilkan opsi basemap
     const baseMaps = {
       'OpenStreetMap': openStreetMap,
       'Satellite Map': satelliteMap,
-      'Dark Map': darkMap
+      'Dark Map': darkMap,
+      'Satellite': esriWorldImagery,
+      'Topographic': esriWorldTopoMap,
+      'Google Satellite': googleSatellite
     };
 
     // Set OpenStreetMap sebagai layer default
@@ -55,9 +70,9 @@ export class HomePage {
 
     // Tambahkan marker dengan popup
     const marker1 = L.marker([51.505, -0.09], { icon: customIcon }).addTo(this.map);
-    marker1.bindPopup('Marker 1: Hello from this marker!').openPopup();
+    marker1.bindPopup('Marker 1: Hello London!').openPopup();
 
     const marker2 = L.marker([51.515, -0.1], { icon: customIcon }).addTo(this.map);
-    marker2.bindPopup('Marker 2: Another marker here!');
+    marker2.bindPopup('Marker 2: Hello London!');
   }
 }
